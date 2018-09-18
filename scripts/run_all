@@ -39,9 +39,12 @@ do
 
 	# $1 is file, $2 is sigma level. Deault set to high to
 	# measure FWHM of real stars
-	../scripts/daophot_find_script $file 5.
+	../scripts/daophot_find_script $file 3.5
 
 	est_FWHM=$(python ../scripts/measure_FWHM.py $fileroot)
+	echo $est_FWHM
+	
+	continue
 	
 	# Change FWHM value
 	curr_FWHM=`grep "FW" daophot_template.opt`
@@ -75,6 +78,8 @@ do
 done # End looping through images
 )
 	
+
+# Remove all symbolic links
 
 
 #done; 

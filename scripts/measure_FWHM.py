@@ -6,6 +6,8 @@ import astropy.io.fits as fits
 import scipy.optimize
 import numpy as np
 
+from astropy.stats import median_absolute_deviation
+
 
 
 def moments2D(inpData):
@@ -101,42 +103,50 @@ if __name__ == "__main__":
 			ys.append(float(parts[2]))
 			
 
-
-
-	#X,Y=np.indices((40,40),dtype=np.float)
-	#Data=np.exp(-(((X-25)/5)**2 +((Y-15)/10)**2)/2) + 1
-	#results=FitGauss2D(Data)
-	#print(results[0][-4])
-
 	# Loop through X,Y values and try to fit Gaussian.
 	# Record the FWHM with each iteration
-	x_FWHMs=[]#np.zeros(len(xs))
-	y_FWHMs=[]#np.zeros(len(ys))
 
-	sample_rate=int(len(xs)/100.)
+	x_FWHMs=[]
+	y_FWHMs=[]
+
+	sample_number=int(len(xs)/500.)
 
 	count=0
 	for x,y in zip(xs,ys):
 		count+=1
-		if count % sample_rate != 0: continue
+		if count % sample_number != 0: continue
 
-		min_x = int(max(x-5,0)) 
-		max_x = int(min(x+5,2046))
-		min_y = int(max(y-5,0))
-		max_y = int(min(y+5,2046))
-		#print(min_x,max_x,min_y,max_y)
-		#if x < 10 or y < 10: continue
+		min_x = int(x-5)
+		max_x = int(x+5)
+		min_y = int(y-5)
+		max_y = int(y+5)
+
+		# Avoid stars at the edges of the image
+
+		if max_x < 10 or max_y < 10 or min_x > 2040 or min_y > 2040: continue
+
 		star_data=data[min_x:max_x+1,min_y:max_y+1]
 		results=FitGauss2D(star_data)
 		#print(results[0][-4])
 		#x_FWHMs.append(	
-		if count==100: break
-		x_FWHMs.append(results[0][-4])
-		y_FWHMs.append(results[0][-3])
-		count+=1
+		x_sig=results[0][-4]
+		y_sig=results[0][-3]
+		if x_sig <= 0 or y_sig <= 0 or np.isnan(x_sig) or np.isnan(y_sig): continue
+		x_FWHMs.append(x_sig)
+		y_FWHMs.append(y_sig)
 				
-	x_med=np.nanmedian(x_FWHMs)*2.355
-	y_med=np.nanmedian(y_FWHMs)*2.355
-	print(0.5*(x_med+y_med))	
+	# Computing median and mad estimates
+	x_med=np.median(x_FWHMs)
+	y_med=np.median(y_FWHMs)
+	x_mad = median_absolute_deviation(x_FWHMs,ignore_nan=True)
+	y_mad = median_absolute_deviation(y_FWHMs,ignore_nan=True)
+
+	
+	# Outlier resistant median
+	x_med = np.median(np.array(x_FWHMs)[ abs(x_FWHMs-x_mad) <= 2.0*x_mad ])	
+	y_med = np.median(np.array(y_FWHMs)[ abs(y_FWHMs-y_mad) <= 2.0*y_mad ])	
+
+	print(0.5*(x_med+y_med)*2.355)
+	
 
 
