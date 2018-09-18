@@ -1,10 +1,9 @@
 #!/bin/sh
 
-file=$1
+fileroot=$1
 sigma=$2
 
 
-fileroot=${file%.*}
 
 rm -f $fileroot.coo
 

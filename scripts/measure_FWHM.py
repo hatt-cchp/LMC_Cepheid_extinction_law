@@ -84,6 +84,7 @@ def FitGauss2D(Data,ip=None):
 
 if __name__ == "__main__":
 	fileroot=sys.argv[1]
+	num_stars=float(sys.argv[2])
 
 	hdul = fits.open(fileroot+'.fits')
 	data = hdul[0].data # assuming the first extension is a table	
@@ -109,7 +110,7 @@ if __name__ == "__main__":
 	x_FWHMs=[]
 	y_FWHMs=[]
 
-	sample_number=int(len(xs)/500.)
+	sample_number=int(len(xs)/num_stars)
 
 	count=0
 	for x,y in zip(xs,ys):
@@ -136,8 +137,8 @@ if __name__ == "__main__":
 		y_FWHMs.append(y_sig)
 				
 	# Computing median and mad estimates
-	x_med=np.median(x_FWHMs)
-	y_med=np.median(y_FWHMs)
+	x_med=np.nanmedian(x_FWHMs)
+	y_med=np.nanmedian(y_FWHMs)
 	x_mad = median_absolute_deviation(x_FWHMs,ignore_nan=True)
 	y_mad = median_absolute_deviation(y_FWHMs,ignore_nan=True)
 

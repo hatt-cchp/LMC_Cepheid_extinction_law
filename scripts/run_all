@@ -10,7 +10,7 @@ source activate astroconda
 
 
 # Loop through each image for an initial
-# photometry run. 
+# photometry run.
 
 (
 cd ../phot
@@ -31,42 +31,19 @@ do
 	fileroot=${file%.*}
 
 	# Estimate the FWHM of stars in the 
-	# current image using the daophot template
-	# file that will have roughly the right parameters
-	
-	rm -f daophot.opt
-	cp daophot_template.opt daophot.opt
+        # current image using the daophot template
+        # file that will have roughly the right parameters
 
-	# $1 is file, $2 is sigma level. Deault set to high to
-	# measure FWHM of real stars
-	../scripts/daophot_find_script $file 3.5
+	../scripts/generate_daophot_file $fileroot	
 
-	est_FWHM=$(python ../scripts/measure_FWHM.py $fileroot)
-	echo $est_FWHM
-	
-	continue
-	
-	# Change FWHM value
-	curr_FWHM=`grep "FW" daophot_template.opt`
-	new_FWHM=`echo $curr_FWHM | sed 's/=.*//'`"=     ""$est_FWHM" 
-	sed "s/$curr_FWHM/$new_FWHM/" < daophot_template.opt > daophot_temp.opt
-	
-	# Update PS value to 4x FWHM
-	est_PS=`echo  "$est_FWHM * 4" | bc`
-        curr_PS=`grep "PS" daophot_template.opt`
-        new_PS=`echo $curr_PS | sed 's/=.*//'`"=     ""$est_PS" 
-        sed "s/$curr_PS/$new_PS/" < daophot_temp.opt > daophot.opt
+	# Get full star *.coo list with updated FWHM
 
-	# Remove intermediate daophot.opt file
-	rm -f daophot_temp.opt
-
-	# Get full star *.coo list
-	../scripts/daophot_find_script $file 3.5	
+	../scripts/daophot_find_script $fileroot 3.5	
 	
 	# Get aperture photometry from full star *.coo list
-	../scripts/daophot_phot_script $file	
-	
-	
+
+	../scripts/daophot_phot_script $fileroot	
+
 	# Generate PSF based on input star lists
 	
 	
@@ -81,9 +58,9 @@ done # End looping through images
 
 # Remove all symbolic links
 
+find ../ -type l -delete
 
-#done; 
-#)
+
 
 
 # Align photometry files and create merged catalog
