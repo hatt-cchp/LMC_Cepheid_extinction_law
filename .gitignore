@@ -3,3 +3,8 @@
 *.ap
 *.coo
 *.psf
+*.cl
+*.swp
+./phot/daophot.opt        
+./phot/daophot_template.opt        
+./phot/photo.opt
