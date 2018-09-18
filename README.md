@@ -1,1 +1,1 @@
-# LMC_Cepheid_extinction_law
+# LMC Cepheid Extinction Law
