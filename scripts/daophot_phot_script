@@ -1,0 +1,17 @@
+#!/bin/sh
+
+file=$1
+
+fileroot=${file%.*}
+
+rm -f $fileroot.ap
+
+daophot << _DAOPHOT_
+at $fileroot
+PHO
+photo
+Y
+$fileroot.coo
+$fileroot.ap
+EXIT
+_DAOPHOT_

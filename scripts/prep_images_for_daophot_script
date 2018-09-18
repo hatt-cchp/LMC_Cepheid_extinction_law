@@ -1,0 +1,16 @@
+#!/bin/sh
+
+# Perform any necessary work 
+# on original images and link
+# result to daophot_ready_images
+
+(
+cd ../daophot_ready_images; 
+
+# Remove existing files
+for file in *.fits; do unlink $file; done
+
+# Link current files
+ln -s ../original_images/*.fits .
+)
+

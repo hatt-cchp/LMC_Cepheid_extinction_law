@@ -1,0 +1,22 @@
+#!/bin/sh
+
+file=$1
+sigma=$2
+
+
+fileroot=${file%.*}
+
+rm -f $fileroot.coo
+
+daophot << _DAOPHOT_
+at $fileroot
+find
+1,1
+$fileroot.coo
+N
+$sigma
+$fileroot.coo
+OVERWRITE
+Y
+EXIT
+_DAOPHOT_

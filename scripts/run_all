@@ -1,0 +1,91 @@
+#!/bin/sh
+
+source activate astroconda
+
+# Perform any necessary work 
+# on original images and link
+# result to daophot_ready_images
+
+./prep_images_for_daophot_script
+
+
+# Loop through each image for an initial
+# photometry run. 
+
+(
+cd ../phot
+
+# Remove existing files
+for file in *.fits; do unlink $file; done
+
+# Link current daophot-ready images
+ln -s ../daophot_ready_images/*.fits .
+
+# Link photometry option file templates
+for file in *opt; do unlink $file; done
+ln -s ../option_files/*opt .
+
+for file in *.fits; 
+do 
+
+	fileroot=${file%.*}
+
+	# Estimate the FWHM of stars in the 
+	# current image using the daophot template
+	# file that will have roughly the right parameters
+	
+	rm -f daophot.opt
+	cp daophot_template.opt daophot.opt
+
+	# $1 is file, $2 is sigma level. Deault set to high to
+	# measure FWHM of real stars
+	../scripts/daophot_find_script $file 5.
+
+	est_FWHM=$(python ../scripts/measure_FWHM.py $fileroot)
+	
+	# Change FWHM value
+	curr_FWHM=`grep "FW" daophot_template.opt`
+	new_FWHM=`echo $curr_FWHM | sed 's/=.*//'`"=     ""$est_FWHM" 
+	sed "s/$curr_FWHM/$new_FWHM/" < daophot_template.opt > daophot_temp.opt
+	
+	# Update PS value to 4x FWHM
+	est_PS=`echo  "$est_FWHM * 4" | bc`
+        curr_PS=`grep "PS" daophot_template.opt`
+        new_PS=`echo $curr_PS | sed 's/=.*//'`"=     ""$est_PS" 
+        sed "s/$curr_PS/$new_PS/" < daophot_temp.opt > daophot.opt
+
+	# Remove intermediate daophot.opt file
+	rm -f daophot_temp.opt
+
+	# Get full star *.coo list
+	../scripts/daophot_find_script $file 3.5	
+	
+	# Get aperture photometry from full star *.coo list
+	../scripts/daophot_phot_script $file	
+	
+	
+	# Generate PSF based on input star lists
+	
+	
+	# Run allstar on preliminary star catalog
+	
+	
+	# Calibrate allstar photometry to standards
+	
+done # End looping through images
+)
+	
+
+
+#done; 
+#)
+
+
+# Align photometry files and create merged catalog
+# of single epoch observations
+
+
+# Average single epoch observations
+
+
+
