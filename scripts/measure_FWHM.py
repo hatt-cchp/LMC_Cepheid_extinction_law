@@ -147,7 +147,7 @@ if __name__ == "__main__":
 	x_med = np.median(np.array(x_FWHMs)[ abs(x_FWHMs-x_mad) <= 2.0*x_mad ])	
 	y_med = np.median(np.array(y_FWHMs)[ abs(y_FWHMs-y_mad) <= 2.0*y_mad ])	
 
-	print(0.5*(x_med+y_med)*2.355)
+	print( "{:.2f}".format(0.5*(x_med+y_med)*2.355) )
 	
 
 

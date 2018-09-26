@@ -1,0 +1,15 @@
+#!/bin/sh
+
+fileroot=$1
+
+
+rm -f $fileroot.srt
+
+daophot << _DAOPHOT_
+SORT
++4
+$fileroot.ap
+$fileroot.srt
+N
+EXIT
+_DAOPHOT_

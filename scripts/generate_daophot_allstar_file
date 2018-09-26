@@ -1,0 +1,82 @@
+#!/bin/sh
+
+fileroot=$1
+
+# Estimate the FWHM of stars in the 
+# current image using the daophot template
+# file that will have roughly the right parameters
+
+rm -f daophot_template.opt
+cp ../option_files/daophot_template.opt . 
+
+# $1 is file, $2 is sigma level. Deault set to high to
+# measure FWHM of real stars
+# temporarily use daophot.opt template 
+# to find source list to measure FWHM
+cp daophot_template.opt daophot.opt 
+../scripts/daophot_find_script $fileroot 3.5
+rm -f daophot.opt # no longer need this
+
+# Estimate the FWHM for stars in the image
+# Pass the fileroot name and the number of stars
+# to use for the average
+
+est_FWHM=$(python ../scripts/measure_FWHM.py $fileroot 50)
+echo $est_FWHM
+
+# Change FWHM value
+curr_FWHM=`grep "FW" daophot_template.opt`
+new_FWHM=`echo $curr_FWHM | sed 's/=.*//'`"=     ""$est_FWHM" 
+sed "s/$curr_FWHM/$new_FWHM/" < daophot_template.opt > daophot_temp.opt
+
+# Update PS value to 4x FWHM
+est_PS=`echo  "$est_FWHM * 4" | bc`
+curr_PS=`grep "PS" daophot_temp.opt`
+new_PS=`echo $curr_PS | sed 's/=.*//'`"=     ""$est_PS" 
+sed "s/$curr_PS/$new_PS/" < daophot_temp.opt > daophot_temp2.opt
+
+# Update Fitting Radius to FWHM
+est_FI=$est_FWHM
+curr_FI=`grep "FI" daophot_temp2.opt`
+new_FI=`echo $curr_FI | sed 's/=.*//'`"=     ""$est_FI" 
+sed "s/$curr_FI/$new_FI/" < daophot_temp2.opt > daophot.opt
+
+
+# Remove intermediate daophot.opt file
+rm -f daophot_temp.opt
+rm -f daophot_temp2.opt
+
+
+# Update allstar.opt files 
+rm -f allstar_template.opt 
+cp ../option_files/allstar_template.opt .
+
+
+# Update Fitting Radius to FWHM
+#est_FI=$est_FWHM
+curr_FI=`grep "FI" allstar_template.opt`
+new_FI=`echo $curr_FI | sed 's/=.*//'`"=     ""$est_FI" 
+sed "s/$curr_FI/$new_FI/" < allstar_template.opt > allstar_temp.opt
+
+est_OS=`echo  "$est_FWHM * 6" | bc`
+curr_OS=`grep "OS" allstar_temp.opt`
+new_OS=`echo $curr_OS | sed 's/=.*//'`"=     ""$est_OS" 
+sed "s/$curr_OS/$new_OS/" < allstar_temp.opt > allstar_temp2.opt
+
+est_IS=`echo  "$est_FWHM * 2" | bc`
+curr_IS=`grep "IS" allstar_temp2.opt`
+new_IS=`echo $curr_IS | sed 's/=.*//'`"=     ""$est_IS" 
+sed "s/$curr_IS/$new_IS/" < allstar_temp2.opt > allstar.opt
+
+
+# Remove intermediate allstar.opt files
+rm -f allstar_temp.opt
+rm -f allstar_temp2.opt
+
+# Remove all template files
+# to clear clutter
+rm -f *template.opt
+
+
+
+

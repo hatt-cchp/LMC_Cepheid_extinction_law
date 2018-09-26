@@ -34,7 +34,7 @@ do
         # current image using the daophot template
         # file that will have roughly the right parameters
 
-	../scripts/generate_daophot_file $fileroot	
+	../scripts/generate_daophot_allstar_file $fileroot	
 
 	# Get full star *.coo list with updated FWHM
 
@@ -44,7 +44,14 @@ do
 
 	../scripts/daophot_phot_script $fileroot	
 
-	# Generate PSF based on input star lists
+	# Sort aperture photometry for brightest stars,
+	# Check which stars are successfully measured
+	# in all apertures (down to a mag limit) 
+	# to within a few FWHM 
+
+	../scripts/daophot_sort_ap_file $fileroot
+	
+	# Generate PSF based on the bright and isolated stars 
 	
 	
 	# Run allstar on preliminary star catalog
