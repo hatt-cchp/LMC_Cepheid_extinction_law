@@ -24,6 +24,8 @@ rm -f *.psf
 rm -f *.lst
 rm -f *.coo
 rm -f *.ap
+rm -f *.als
+rm -f *s.fits
 
 # Link current daophot-ready images
 ln -s ../daophot_ready_images/*.fits .

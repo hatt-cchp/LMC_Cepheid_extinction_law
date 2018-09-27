@@ -1,0 +1,12 @@
+#!/bin/sh
+
+fileroot=$1
+
+daophot << _DAOPHOT_
+AT $fileroot
+PSF
+$fileroot.ap
+$fileroot.lst
+$fileroot.psf
+EXIT
+_DAOPHOT_

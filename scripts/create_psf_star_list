@@ -4,6 +4,7 @@
 fileroot=$1
 
 
+rm -f psf_star_list
 
 rm -f $fileroot.lst
 rm -f $fileroot.psf
@@ -12,7 +13,7 @@ rm -f $fileroot.nei
 daophot << _DAOPHOT_
 PICK
 $fileroot.srt
-500,16
+1000,16
 $fileroot.lst
 AT $fileroot
 PSF
@@ -22,4 +23,38 @@ $fileroot.psf
 EXIT
 _DAOPHOT_
 
+
+
+# Ignore stars in *.lst file that are brighter than
+# 11.5 instrumental magnitudes. These often show
+# up as saturated or bad PSF stars
+
+bad_psf_star_exist=$(python ../scripts/check_psf_star_list.py "psf_star_list")
+
+
+while [ $bad_psf_star_exist -eq 1 ]
+do
+
+	
+	# Filter out the bad psf stars from the list	
+	python ../scripts/update_psf_star_list.py $fileroot psf_star_list
+	
+	
+	rm -f psf_star_list
+	rm -f $fileroot.psf
+	rm -f $fileroot.nei
+
+	# Refit the PSF
+	../scripts/fit_psf $fileroot
+
+	# Check if all bad psf stars have been removed
+
+	bad_psf_star_exist=$(python ../scripts/check_psf_star_list.py "psf_star_list")	
+	#echo $bad_psf_star_exist
+
+done
+
+
+rm -f psf_star_list
+rm -f $fileroot.nei
 
