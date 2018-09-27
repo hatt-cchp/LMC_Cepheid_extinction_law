@@ -81,10 +81,36 @@ def FitGauss2D(Data,ip=None):
 
 
 
+def compute_mad_estimates(x_FWHMs,y_FWHMs):
+	"""
+	"""
+
+	# Computing median and mad estimates
+	x_med=np.nanmedian(x_FWHMs)
+	y_med=np.nanmedian(y_FWHMs)
+	x_mad = median_absolute_deviation(x_FWHMs,ignore_nan=True)
+	y_mad = median_absolute_deviation(y_FWHMs,ignore_nan=True)
+	
+	# Outlier resistant median
+	x_med = np.median(np.array(x_FWHMs)[ abs(x_FWHMs-x_mad) <= 2.0*x_mad ])	
+	y_med = np.median(np.array(y_FWHMs)[ abs(y_FWHMs-y_mad) <= 2.0*y_mad ])	
+        
+
+	return 0.5*(x_med+y_med)*2.355
+
+
+
+
+
+
+
+
+
+
 
 if __name__ == "__main__":
 	fileroot=sys.argv[1]
-	num_stars=float(sys.argv[2])
+	max_num_stars=float(sys.argv[2])
 
 	hdul = fits.open(fileroot+'.fits')
 	data = hdul[0].data # assuming the first extension is a table	
@@ -110,12 +136,14 @@ if __name__ == "__main__":
 	x_FWHMs=[]
 	y_FWHMs=[]
 
-	sample_number=int(len(xs)/num_stars)
+	#sample_number=int(len(xs)/num_stars)
 
 	count=0
+	prev_mean_FWHM = -99
+
 	for x,y in zip(xs,ys):
-		count+=1
-		if count % sample_number != 0: continue
+
+		if count == max_num_stars: break #% sample_number != 0: continue
 
 		min_x = int(x-5)
 		max_x = int(x+5)
@@ -128,26 +156,73 @@ if __name__ == "__main__":
 
 		star_data=data[min_x:max_x+1,min_y:max_y+1]
 		results=FitGauss2D(star_data)
+
 		#print(results[0][-4])
 		#x_FWHMs.append(	
 		x_sig=results[0][-4]
 		y_sig=results[0][-3]
-		if x_sig <= 0 or y_sig <= 0 or np.isnan(x_sig) or np.isnan(y_sig): continue
+
+		if np.nan in results[0]: continue
+
+		# Avoid bogus FWHM measures.
+		# Too small of FWHM can be cosmic rays
+		# Also avoid very large FWHMs. DAOPHOT
+		# is currently only able to go up to 50 pix
+		# for the outer sky.
+
+		if x_sig <= 0.5 or y_sig <= 0.5 or \
+			x_sig >= 50 or y_sig >= 50: continue
+			#x_sig == 'nan' or y_sig == 'nan' or \
+			
+			
+
 		x_FWHMs.append(x_sig)
 		y_FWHMs.append(y_sig)
-				
-	# Computing median and mad estimates
-	x_med=np.nanmedian(x_FWHMs)
-	y_med=np.nanmedian(y_FWHMs)
-	x_mad = median_absolute_deviation(x_FWHMs,ignore_nan=True)
-	y_mad = median_absolute_deviation(y_FWHMs,ignore_nan=True)
 
+
+		if prev_mean_FWHM == -99: 
+			
+			prev_mean_FWHM = 0.5*(x_FWHMs[0] + y_FWHMs[0]) 
+
+		else:
+
+			mean_FWHM  = compute_mad_estimates(x_FWHMs,y_FWHMs)
+
+			mean_diff = abs(mean_FWHM - prev_mean_FWHM) 
+
+			if mean_diff <= 0.1 and count >= 100 and mean_diff != np.nan: 
+				count = max_num_stars
+		
+			prev_mean_FWHM = mean_diff
+
+
+			#print(mean_FWHM)
+
+		count+=1
+
+
+	#print(prev_mean_FWHM,mean_FWHM,mean_diff)
+
+	#import matplotlib.pyplot as plt 
+	#plt.hist(x_FWHMs,bins=1000)	
+	#plt.xlim(0,3)
+	#plt.show()
+
+	#print(x_FWHMs)
 	
-	# Outlier resistant median
-	x_med = np.median(np.array(x_FWHMs)[ abs(x_FWHMs-x_mad) <= 2.0*x_mad ])	
-	y_med = np.median(np.array(y_FWHMs)[ abs(y_FWHMs-y_mad) <= 2.0*y_mad ])	
+	## Computing median and mad estimates
+	#x_med=np.nanmedian(x_FWHMs)
+	#y_med=np.nanmedian(y_FWHMs)
+	#x_mad = median_absolute_deviation(x_FWHMs,ignore_nan=True)
+	#y_mad = median_absolute_deviation(y_FWHMs,ignore_nan=True)
+	#
+	## Outlier resistant median
+	#x_med = np.median(np.array(x_FWHMs)[ abs(x_FWHMs-x_mad) <= 2.0*x_mad ])	
+	#y_med = np.median(np.array(y_FWHMs)[ abs(y_FWHMs-y_mad) <= 2.0*y_mad ])	
 
-	print( "{:.2f}".format(0.5*(x_med+y_med)*2.355) )
+	print( "{:.2f}".format(mean_FWHM) )
+	
+
 	
 
 

@@ -17,6 +17,13 @@ cd ../phot
 
 # Remove existing files
 for file in *.fits; do unlink $file; done
+rm -f *.srt
+rm -f *.nst
+rm -f *.nei
+rm -f *.psf
+rm -f *.lst
+rm -f *.coo
+rm -f *.ap
 
 # Link current daophot-ready images
 ln -s ../daophot_ready_images/*.fits .
@@ -35,7 +42,7 @@ do
         # file that will have roughly the right parameters
 
 	../scripts/generate_daophot_allstar_file $fileroot	
-
+	
 	# Get full star *.coo list with updated FWHM
 
 	../scripts/daophot_find_script $fileroot 3.5	
@@ -52,27 +59,39 @@ do
 	../scripts/daophot_sort_ap_file $fileroot
 	
 	# Generate PSF based on the bright and isolated stars 
+
+	../scripts/create_psf_star_list	$fileroot
+
+	# Run allstar on star catalog
+
+	../scripts/allstar_script $fileroot
+
 	
-	
-	# Run allstar on preliminary star catalog
-	
-	
-	# Calibrate allstar photometry to standards
-	
-done # End looping through images
+done # End looping through images in ./phot/
 )
-	
-
-# Remove all symbolic links
-
-find ../ -type l -delete
-
 
 
 
 # Align photometry files and create merged catalog
-# of single epoch observations
+# of single epoch observations                    	
 
+
+
+
+
+
+
+
+# Remove all symbolic links
+
+#find ../ -type l -delete
+
+
+
+
+
+
+# Calibrate allstar photometry to standards
 
 # Average single epoch observations
 

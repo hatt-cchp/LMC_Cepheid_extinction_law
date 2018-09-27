@@ -1,0 +1,14 @@
+#!/bin/sh
+
+fileroot=$1
+
+rm -f $fileroot.als
+
+allstar << _ALLSTAR_
+Y
+$fileroot.fits
+$fileroot.psf
+$fileroot.ap
+$fileroot.als
+
+_ALLSTAR_

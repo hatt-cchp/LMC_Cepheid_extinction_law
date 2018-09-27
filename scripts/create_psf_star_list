@@ -1,0 +1,25 @@
+#!/bin/sh
+
+
+fileroot=$1
+
+
+
+rm -f $fileroot.lst
+rm -f $fileroot.psf
+rm -f $fileroot.nei
+
+daophot << _DAOPHOT_
+PICK
+$fileroot.srt
+500,16
+$fileroot.lst
+AT $fileroot
+PSF
+$fileroot.ap
+$fileroot.lst
+$fileroot.psf
+EXIT
+_DAOPHOT_
+
+

@@ -21,30 +21,44 @@ rm -f daophot.opt # no longer need this
 # Pass the fileroot name and the number of stars
 # to use for the average
 
-est_FWHM=$(python ../scripts/measure_FWHM.py $fileroot 50)
+
+var=$(python ../scripts/read_detector_gain_noise.py $fileroot)
+curr_RE=`grep "RE" daophot_template.opt`
+curr_GA=`grep "GA" daophot_template.opt`
+arr=($var)
+RE=${arr[0]}
+GA=${arr[1]}
+
+new_RE=`echo $curr_RE | sed 's/=.*//'`"=     ""$RE"
+sed "s/$curr_RE/$new_RE/" < daophot_template.opt > daophot_temp1.opt
+
+new_GA=`echo $curr_GA | sed 's/=.*//'`"=     ""$GA"
+sed "s/$curr_GA/$new_GA/" < daophot_temp1.opt > daophot_temp2.opt
+
+
+est_FWHM=$(python ../scripts/measure_FWHM.py $fileroot 100)
 echo $est_FWHM
 
 # Change FWHM value
 curr_FWHM=`grep "FW" daophot_template.opt`
 new_FWHM=`echo $curr_FWHM | sed 's/=.*//'`"=     ""$est_FWHM" 
-sed "s/$curr_FWHM/$new_FWHM/" < daophot_template.opt > daophot_temp.opt
+sed "s/$curr_FWHM/$new_FWHM/" < daophot_temp2.opt > daophot_temp3.opt
 
 # Update PS value to 4x FWHM
 est_PS=`echo  "$est_FWHM * 4" | bc`
-curr_PS=`grep "PS" daophot_temp.opt`
+curr_PS=`grep "PS" daophot_template.opt`
 new_PS=`echo $curr_PS | sed 's/=.*//'`"=     ""$est_PS" 
-sed "s/$curr_PS/$new_PS/" < daophot_temp.opt > daophot_temp2.opt
+sed "s/$curr_PS/$new_PS/" < daophot_temp3.opt > daophot_temp4.opt
 
 # Update Fitting Radius to FWHM
 est_FI=$est_FWHM
-curr_FI=`grep "FI" daophot_temp2.opt`
+curr_FI=`grep "FI" daophot_template.opt`
 new_FI=`echo $curr_FI | sed 's/=.*//'`"=     ""$est_FI" 
-sed "s/$curr_FI/$new_FI/" < daophot_temp2.opt > daophot.opt
+sed "s/$curr_FI/$new_FI/" < daophot_temp4.opt > daophot.opt
 
 
 # Remove intermediate daophot.opt file
-rm -f daophot_temp.opt
-rm -f daophot_temp2.opt
+rm -f daophot_temp*.opt
 
 
 # Update allstar.opt files 
@@ -59,23 +73,19 @@ new_FI=`echo $curr_FI | sed 's/=.*//'`"=     ""$est_FI"
 sed "s/$curr_FI/$new_FI/" < allstar_template.opt > allstar_temp.opt
 
 est_OS=`echo  "$est_FWHM * 6" | bc`
-curr_OS=`grep "OS" allstar_temp.opt`
+curr_OS=`grep "OS" allstar_template.opt`
 new_OS=`echo $curr_OS | sed 's/=.*//'`"=     ""$est_OS" 
 sed "s/$curr_OS/$new_OS/" < allstar_temp.opt > allstar_temp2.opt
 
 est_IS=`echo  "$est_FWHM * 2" | bc`
-curr_IS=`grep "IS" allstar_temp2.opt`
+curr_IS=`grep "IS" allstar_template.opt`
 new_IS=`echo $curr_IS | sed 's/=.*//'`"=     ""$est_IS" 
 sed "s/$curr_IS/$new_IS/" < allstar_temp2.opt > allstar.opt
 
 
 # Remove intermediate allstar.opt files
-rm -f allstar_temp.opt
-rm -f allstar_temp2.opt
+rm -f allstar_temp*.opt
 
-# Remove all template files
-# to clear clutter
-rm -f *template.opt
 
 
 
