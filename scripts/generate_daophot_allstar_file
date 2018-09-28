@@ -2,6 +2,7 @@
 
 fileroot=$1
 
+
 # Estimate the FWHM of stars in the 
 # current image using the daophot template
 # file that will have roughly the right parameters
@@ -67,10 +68,16 @@ cp ../option_files/allstar_template.opt .
 
 
 # Update Fitting Radius to FWHM
-#est_FI=$est_FWHM
+# Allstar fitting radius must be at least 2.5
+var=`echo $est_FI'<'2.5 | bc -l`
+if [ $var -eq 1 ];
+then 
+	$est_FI=2.5
+fi
 curr_FI=`grep "FI" allstar_template.opt`
 new_FI=`echo $curr_FI | sed 's/=.*//'`"=     ""$est_FI" 
 sed "s/$curr_FI/$new_FI/" < allstar_template.opt > allstar_temp.opt
+
 
 est_OS=`echo  "$est_FWHM * 6" | bc`
 curr_OS=`grep "OS" allstar_template.opt`

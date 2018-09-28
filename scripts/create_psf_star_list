@@ -13,7 +13,7 @@ rm -f $fileroot.nei
 daophot << _DAOPHOT_
 PICK
 $fileroot.srt
-1000,16
+200,16
 $fileroot.lst
 AT $fileroot
 PSF

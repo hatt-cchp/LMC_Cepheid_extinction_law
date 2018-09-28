@@ -1,6 +1,7 @@
 #!/bin/sh
 
 fileroot=$1
+sigma=$2
 
 rm -f $fileroot.als
 
@@ -12,3 +13,69 @@ $fileroot.ap
 $fileroot.als
 
 _ALLSTAR_
+
+
+
+# Attached subtract image and try to get sources
+# not intitially found twice
+for loop in {1..2};
+do
+
+subfileroot=$fileroot"s"
+rm -f $subfileroot.coo
+rm -f $subfileroot.ap
+
+daophot << _DAOPHOT_
+AT $subfileroot
+find
+1,1
+$subfileroot.coo
+N
+$sigma
+$subfileroot.coo
+OVERWRITE
+Y
+PHO
+photo
+Y
+$subfileroot.coo
+$subfileroot.ap
+_DAOPHOT_
+
+
+rm -f temp.psf
+mv $fileroot.psf temp.psf
+rm -f $fileroot.cmb
+
+# Do ap phot on PSF phot file (now actual known stars)
+# and append both the star-sub and original star lists
+daophot << _DAOPHOT_
+AT $fileroot
+PHO
+photo
+Y
+$fileroot.als
+$fileroot.ap
+OVERWRITE
+APPEND
+$fileroot.ap
+$subfileroot.ap
+$fileroot.cmb
+EXIT
+_DAOPHOT_
+
+mv $fileroot.cmb $fileroot.ap
+
+mv temp.psf $fileroot.psf
+rm -f $fileroot.als
+
+allstar << _ALLSTAR_
+Y
+$fileroot.fits
+$fileroot.psf
+$fileroot.ap
+$fileroot.als
+
+_ALLSTAR_
+
+done # end sub-tracted image loop

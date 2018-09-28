@@ -2,6 +2,8 @@
 
 source activate astroconda
 
+
+
 # Perform any necessary work 
 # on original images and link
 # result to daophot_ready_images
@@ -39,15 +41,30 @@ do
 
 	fileroot=${file%.*}
 
+	# Setting the detection threshold
+	if [ ${fileroot:0:4}=="sccd" ];
+	then
+		daophot_threshold=3.5		
+	fi
+	if [ ${fileroot:0:4}=="dbcc" ];	
+	then
+		daophot_threshold=2.5
+	fi
+
+
+	#if [ $fileroot != 'dbccd1064' ];then continue; fi
+
+
+
 	# Estimate the FWHM of stars in the 
         # current image using the daophot template
         # file that will have roughly the right parameters
 
-	../scripts/generate_daophot_allstar_file $fileroot	
-	
+	../scripts/generate_daophot_allstar_file $fileroot 
+
 	# Get full star *.coo list with updated FWHM
 
-	../scripts/daophot_find_script $fileroot 3.5	
+	../scripts/daophot_find_script $fileroot $daophot_threshold	
 	
 	# Get aperture photometry from full star *.coo list
 
@@ -66,7 +83,8 @@ do
 
 	# Run allstar on star catalog
 
-	../scripts/allstar_script $fileroot
+	../scripts/allstar_script $fileroot $daophot_threshold
+
 
 	
 done # End looping through images in ./phot/
