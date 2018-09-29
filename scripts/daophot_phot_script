@@ -4,6 +4,9 @@ fileroot=$1
 
 
 rm -f $fileroot.ap
+rm -f $fileroot.nst
+rm -f $fileroot.nei
+rm -f $fileroot.psf
 
 daophot << _DAOPHOT_
 at $fileroot
