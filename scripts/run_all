@@ -19,15 +19,15 @@ cd ../phot
 
 # Remove existing files
 for file in *.fits; do unlink $file; done
-rm -f *.srt
-rm -f *.nst
-rm -f *.nei
-rm -f *.psf
-rm -f *.lst
-rm -f *.coo
-rm -f *.ap
-rm -f *.als
-rm -f *s.fits
+#rm -f *.srt
+#rm -f *.nst
+#rm -f *.nei
+#rm -f *.psf
+#rm -f *.lst
+#rm -f *.coo
+#rm -f *.ap
+#rm -f *.als
+#rm -f *s.fits
 
 # Link current daophot-ready images
 ln -s ../daophot_ready_images/*.fits .
@@ -42,17 +42,24 @@ do
 	fileroot=${file%.*}
 
 	# Setting the detection threshold
-	if [ ${fileroot:0:4}=="sccd" ];
+	if [ ${fileroot:0:4} == "sccd" ];
 	then
 		daophot_threshold=3.5		
 	fi
-	if [ ${fileroot:0:4}=="dbcc" ];	
+	if [ ${fileroot:0:4} == "dbcc" ];	
 	then
 		daophot_threshold=2.5
 	fi
 
+	# Skip existing or already run images
+	if [ -s $fileroot".als" ]; 
+	then 
+		#echo $fileroot".als" "file exists";
+		continue
+	fi
 
-	#if [ $fileroot != 'dbccd1064' ];then continue; fi
+
+	if [ $fileroot != "sccd1057" ];then continue; fi
 
 
 
