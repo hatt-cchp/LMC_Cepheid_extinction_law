@@ -85,18 +85,19 @@ def compute_mad_estimates(x_FWHMs,y_FWHMs):
 	"""
 	"""
 
+	
 	# Computing median and mad estimates
 	x_med=np.nanmedian(x_FWHMs)
 	y_med=np.nanmedian(y_FWHMs)
 	x_mad = median_absolute_deviation(x_FWHMs,ignore_nan=True)
 	y_mad = median_absolute_deviation(y_FWHMs,ignore_nan=True)
-	
-	# Outlier resistant median
-	x_med = np.median(np.array(x_FWHMs)[ abs(x_FWHMs-x_mad) <= 2.0*x_mad ])	
-	y_med = np.median(np.array(y_FWHMs)[ abs(y_FWHMs-y_mad) <= 2.0*y_mad ])	
-        
 
-	return 0.5*(x_med+y_med)*2.355
+	# Outlier resistant median
+	x_med_clipped = np.median(np.array(x_FWHMs)[ abs(x_FWHMs-x_med) <= 2.0*x_mad ])	
+	y_med_clipped = np.median(np.array(y_FWHMs)[ abs(y_FWHMs-y_med) <= 2.0*y_mad ])	
+
+
+	return 0.5*(x_med_clipped+y_med_clipped)*2.355
 
 
 
@@ -157,8 +158,6 @@ if __name__ == "__main__":
 		star_data=data[min_x:max_x+1,min_y:max_y+1]
 		results=FitGauss2D(star_data)
 
-		#print(results[0][-4])
-		#x_FWHMs.append(	
 		x_sig=results[0][-4]
 		y_sig=results[0][-3]
 
@@ -171,9 +170,11 @@ if __name__ == "__main__":
 		# for the outer sky.
 
 		if x_sig <= 0.5 or y_sig <= 0.5 or \
-			x_sig >= 50 or y_sig >= 50: continue
-			#x_sig == 'nan' or y_sig == 'nan' or \
+			x_sig >= 50 or y_sig >= 50 or \
+			np.isnan(x_sig)  or np.isnan(y_sig): continue
 			
+		
+		#print(x_sig,y_sig,type(x_sig),np.isnan(x_sig))
 			
 
 		x_FWHMs.append(x_sig)
