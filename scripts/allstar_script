@@ -21,6 +21,8 @@ _ALLSTAR_
 for loop in {1..2};
 do
 
+offset_value=$loop"00000"
+
 subfileroot=$fileroot"s"
 rm -f $subfileroot.coo
 rm -f $subfileroot.ap
@@ -35,10 +37,14 @@ $sigma
 $subfileroot.coo
 OVERWRITE
 Y
+OFFSET
+$subfileroot.coo
+$offset_value,0,0,0
+$subfileroot.off
 PHO
 photo
 Y
-$subfileroot.coo
+$subfileroot.off
 $subfileroot.ap
 _DAOPHOT_
 

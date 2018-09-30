@@ -1,0 +1,7 @@
+#!/bin/sh
+
+fileroot=$1
+
+rm -f $fileroot.ap
+rm -f $fileroot.coo
+

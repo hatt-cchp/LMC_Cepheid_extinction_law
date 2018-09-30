@@ -19,6 +19,7 @@ cd ../phot
 
 # Remove existing files
 for file in *.fits; do unlink $file; done
+
 #rm -f *.srt
 #rm -f *.nst
 #rm -f *.nei
@@ -59,7 +60,8 @@ do
 	fi
 
 
-	if [ $fileroot != "sccd1057" ];then continue; fi
+	# Ignore all but a specific image
+	#if [ $fileroot != "dbccd2112" ];then continue; fi
 
 
 
@@ -92,7 +94,11 @@ do
 
 	../scripts/allstar_script $fileroot $daophot_threshold
 
+	# Remove intermediate files for the current image
 
+	../scripts/clean_up_directory $fileroot
+
+	exit
 	
 done # End looping through images in ./phot/
 )

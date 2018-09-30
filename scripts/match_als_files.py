@@ -16,11 +16,12 @@ start_match_rad=20
 
 f = open("daomatch_daomaster_als_script","w")
 
+f.write("#!/bin/sh\n\n")
+
 for cepheid in cepheid_names:
 
 	# Data relevant for current cepheid
 	sub_df = cepheid_df[ cepheid_df['name'].str.contains(cepheid) ].copy()
-	#sub_df.sort_values('filter',inplace=True)
 
 	als_names=sub_df['image'].values
 	
@@ -30,16 +31,19 @@ for cepheid in cepheid_names:
 		als_names[i] = als_names[i].split('.fits')[0]+'.als'
 
 		
+	# Remove old *.mch instances
+	f.write("rm -f "+cepheid+".mch\n\n")
 
 	f.write("daomatch << _DAOMATCH_\n")
 
 	f.write(als_names[0]+"\n")
 	f.write(cepheid+'.mch\n')
 	
-	for als_name in als_names[2:]:
+	for als_name in als_names[1:]:
 		f.write(als_name+"\n")
 		f.write("Y\n") # Add yes just in case daomatch wants confirmation of transformation
 
+	f.write("EXIT\n")
 	f.write("_DAOMATCH_\n\n")
 
 	# Remove existing *raw files
@@ -55,6 +59,8 @@ for cepheid in cepheid_names:
 		f.write("99\n")
 		f.write(order_transform+"\n")
 		f.write(str(start_match_rad)+"\n")
+		# daomaster requires manually entering of return
+		# for each file that's in the list...
 		for i in range(len(als_names)):
 			f.write("\n")
 		# Count down from start_match_rad to 1 then 0 to exit

@@ -170,7 +170,7 @@ if __name__ == "__main__":
 		# for the outer sky.
 
 		if x_sig <= 0.5 or y_sig <= 0.5 or \
-			x_sig >= 50 or y_sig >= 50 or \
+			x_sig >= 10 or y_sig >= 10 or \
 			np.isnan(x_sig)  or np.isnan(y_sig): continue
 			
 		

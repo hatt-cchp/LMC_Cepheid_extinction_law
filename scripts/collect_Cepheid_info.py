@@ -105,9 +105,9 @@ cols=['name','filter','image','start_time','end_time']
 
 df = df[cols]
 # Sort by name and filter
-df = df.sort_values(['name','filter']).set_index('name')
+df = df.sort_values(['name','filter','start_time']).set_index('name')
 
-print(df)
+#print(df)
 
 # Write df to file
 with open("Cepheid.info","w") as f:
