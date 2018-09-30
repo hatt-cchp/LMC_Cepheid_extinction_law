@@ -26,6 +26,7 @@ offset_value=$loop"00000"
 subfileroot=$fileroot"s"
 rm -f $subfileroot.coo
 rm -f $subfileroot.ap
+rm -f $subfileroot.off
 
 daophot << _DAOPHOT_
 AT $subfileroot
@@ -47,6 +48,8 @@ Y
 $subfileroot.off
 $subfileroot.ap
 _DAOPHOT_
+
+rm -f $subfileroot.off # no longer needed
 
 
 rm -f temp.psf

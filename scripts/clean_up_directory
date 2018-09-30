@@ -3,5 +3,8 @@
 fileroot=$1
 
 rm -f $fileroot.ap
+rm -f $fileroot"s.ap"
 rm -f $fileroot.coo
+rm -f $fileroot"s.coo"
+
 

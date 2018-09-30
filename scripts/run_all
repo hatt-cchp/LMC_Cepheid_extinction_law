@@ -98,7 +98,7 @@ do
 
 	../scripts/clean_up_directory $fileroot
 
-	exit
+
 	
 done # End looping through images in ./phot/
 )
