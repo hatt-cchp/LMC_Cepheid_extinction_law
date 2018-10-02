@@ -1,0 +1,46 @@
+# Refsystem: j2000  Coordinates: equatorial FK5
+#     Equinox: J2000.000 Epoch: J2000.00000000 MJD: 51544.50000
+# Insystem: j2000  Coordinates: equatorial FK5
+#     Equinox: J2000.000 Epoch: J2000.00000000 MJD: 51544.50000
+
+# Coords File: sccd1066_xy_radec.dat  Image: sccd1066.fits
+#     Database: sccd1066_xy_radec.db  Solution: sccd1066.fits
+# Coordinate mapping status
+#     Ra/Dec or Long/Lat fit rms: 0.174  0.15   (arcsec  arcsec)
+# Coordinate mapping parameters
+#     Sky projection geometry: tan
+#     Reference point: 85:26:55.22  -68:40:26.75  (degrees  degrees)
+#     Reference point: 968.095  836.344  (pixels  pixels)
+#     X and Y scale: 0.260  0.261  (arcsec/pixel  arcsec/pixel)
+#     X and Y axis rotation: 175.700  175.654  (degrees  degrees)
+# Wcs mapping status
+#     Ra/Dec or Long/Lat wcs rms: 0.174  0.15   (arcsec  arcsec)
+
+# Input Coordinate Listing
+#     Column 1: X (pixels)
+#     Column 2: Y (pixels)
+#     Column 3: Ra / Longitude (degrees)
+#     Column 4: Dec / Latitude (degrees)
+#     Column 5: Fitted Ra / Longitude (degrees)
+#     Column 6: Fitted Dec / Latitude (degrees)
+#     Column 7: Residual Ra / Longitude (arcseconds)
+#     Column 8: Residual Dec / Latitude (arcseconds)
+
+   372.680   1769.790   85:34:52.79 -68:44:17.63   85:34:52.59 -68:44:17.81   0.201  0.180
+   587.440   1558.690   85:32:07.15 -68:43:27.23   85:32:07.06 -68:43:27.18   0.095 -0.046
+   821.890   1749.870   85:29:29.29 -68:44:21.73   85:29:29.76 -68:44:21.56  -0.469 -0.168
+   435.580    837.920   85:33:15.88 -68:40:16.72   85:33:15.58 -68:40:16.64   0.297 -0.077
+   551.700   1189.750   85:32:12.37 -68:41:50.60   85:32:12.15 -68:41:50.49   0.218 -0.117
+   964.190   1026.460   85:27:07.92 -68:41:16.15   85:27:08.36 -68:41:16.14  -0.436 -0.014
+   209.690    226.110   85:35:23.06 -68:37:32.84   85:35:22.60 -68:37:32.95   0.467  0.103
+   286.020    485.140   85:34:43.18 -68:38:41.75   85:34:42.65 -68:38:41.87   0.524  0.120
+   700.010    577.670   85:29:51.50 -68:39:14.47   85:29:52.46 -68:39:14.18  -0.959 -0.290
+   788.620    172.740   85:28:26.87 -68:37:30.68   85:28:27.12 -68:37:30.57  -0.252 -0.112
+  1004.720    380.460   85:26:04.09 -68:38:28.75   85:26:04.35 -68:38:28.84  -0.260  0.092
+  1162.040    695.480   85:24:28.51 -68:39:53.64   85:24:29.11 -68:39:53.87  -0.597  0.226
+  1573.840    310.590   85:19:14.74 -68:38:21.44   85:19:14.73 -68:38:21.61   0.004  0.163
+  1668.400    991.660   85:18:44.24 -68:41:20.47   85:18:43.18 -68:41:20.64   1.060  0.165
+  1884.980    571.050   85:15:46.37 -68:39:35.32   85:15:46.39 -68:39:35.26  -0.023 -0.057
+  1933.130    209.900   85:14:53.41 -68:38:02.36   85:14:53.23 -68:38:02.17   0.177 -0.194
+  1512.860   1464.550   85:20:59.50 -68:43:20.71   85:20:59.54 -68:43:20.74  -0.046  0.025
+
