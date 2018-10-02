@@ -1,10 +1,11 @@
 *.fits
 *.als
+*.psf
 *.ap
 *.coo
-*.psf
 *.cl
 *.swp
+_*
 ./phot/daophot.opt        
 ./phot/daophot_template.opt        
 ./phot/photo.opt
