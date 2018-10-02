@@ -25,15 +25,22 @@ if __name__ == "__main__":
 			# saturated stars or 
 			# bad psf stars
 			#print(parts)
+			
 			#continue
 			for el in parts:
-				if el == '': continue
-				if '\n' in el: continue
+			#	print(el)
 
-	
 				if 'saturated' in el: bad_star = 1
 				if '?' in el: bad_star = 1
 				if '*' in el: bad_star = 1
 
+				if el == '': continue
+				if '\n' in el: continue
+
+	
+				
+				
+				
+			
 
 	print(bad_star)

@@ -27,11 +27,19 @@ if __name__ == "__main__":
 			#print(parts)
 			#continue
 			for el in parts:
-				if el == '': continue
-				if '\n' in el: continue
+
+
 				if 'saturated' in el: continue
 				if '?' in el: continue
 				if '*' in el: continue
+				
+				if el == '': continue
+				if '\n' in el: continue
+
+
+				
+				
+				
 
 				#print(el)
 				# remove preceeding white space
