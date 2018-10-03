@@ -1,0 +1,23 @@
+# Region file format: DS9 version 4.1
+global color=green dashlist=8 3 width=1 font="helvetica 10 normal roman" select=1 highlite=1 dash=0 fixed=0 edit=1 move=1 delete=1 include=1 source=1
+fk5
+circle(74.29113011,-67.4138776,19.667") # color=magenta
+circle(74.2858755,-67.42226736,19.667") # color=magenta
+circle(74.23531978,-67.38637237,19.667") # color=magenta
+circle(74.26122358,-67.39585266,19.667") # color=magenta
+circle(74.25677158,-67.40543948,19.667") # color=magenta
+circle(74.30616976,-67.39068456,19.667") # color=magenta
+circle(74.30141276,-67.38267003,19.667") # color=magenta
+circle(74.37439635,-67.43504014,19.667") # color=magenta
+circle(74.42336105,-67.39924871,19.667") # color=magenta
+circle(74.42769502,-67.37306092,19.667") # color=magenta
+circle(74.41290071,-67.34246895,19.667") # color=magenta
+circle(74.29611162,-67.33967935,19.667") # color=magenta
+circle(74.33455746,-67.38191574,19.667") # color=magenta
+circle(74.16432391,-67.33021295,19.667") # color=magenta
+circle(74.13364463,-67.32582655,19.667") # color=magenta
+circle(74.14925376,-67.35253364,19.667") # color=magenta
+circle(74.26731379,-67.34735704,19.667") # color=magenta
+circle(74.13419666,-67.44605816,19.667") # color=magenta
+circle(74.20931976,-67.42117112,13.658") # color=magenta
+circle(74.18852323,-67.42137173,13.658") # color=magenta
