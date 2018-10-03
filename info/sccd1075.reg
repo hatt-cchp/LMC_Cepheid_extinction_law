@@ -1,0 +1,25 @@
+# Region file format: DS9 version 4.1
+global color=green dashlist=8 3 width=1 font="helvetica 10 normal roman" select=1 highlite=1 dash=0 fixed=0 edit=1 move=1 delete=1 include=1 source=1
+physical
+circle(487.52288,827.92506,71.663525) # color=magenta
+circle(924.67094,1078.7477,71.663525) # color=magenta
+circle(1254.3236,731.17917,71.663525) # color=magenta
+circle(1426.3162,870.92323,71.663525) # color=magenta
+circle(1935.1279,921.08776,71.663525) # color=magenta
+circle(526.93787,380.02746,71.663525) # color=magenta
+circle(835.09142,240.2834,71.663525) # color=magenta
+circle(1165.4168,8.195648,71.663525) # color=magenta
+circle(1502.2358,208.85377,71.663525) # color=magenta
+circle(2021.797,58.360179,71.663525) # color=magenta
+circle(208.70755,87.025626,71.663525) # color=magenta
+circle(1267.0546,457.56689,71.663525) # color=magenta
+circle(168.19565,946.09691,71.663525) # color=magenta
+circle(830.41133,1378.6673,71.663525) # color=magenta
+circle(912.82449,1586.4918,71.663525) # color=magenta
+circle(652.74528,1924.1078,49.766347) # color=magenta
+circle(498.46944,1869.3648,49.766347) # color=magenta
+circle(1003.5984,1956.456,49.766347) # color=magenta
+circle(372.9168,1531.6496,41.472007) # color=magenta
+circle(1972.3321,1358.6356,59.719676) # color=magenta
+circle(1673.7337,1484.0469,59.719676) # color=magenta
+circle(1888.7245,1693.0658,59.719676) # color=magenta
