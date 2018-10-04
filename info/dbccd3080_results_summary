@@ -1,0 +1,44 @@
+# Refsystem: j2000  Coordinates: equatorial FK5
+#     Equinox: J2000.000 Epoch: J2000.00000000 MJD: 51544.50000
+# Insystem: j2000  Coordinates: equatorial FK5
+#     Equinox: J2000.000 Epoch: J2000.00000000 MJD: 51544.50000
+
+# Coords File: dbccd3080_xy_radec.dat  Image: dbccd3080.fits
+#     Database: dbccd3080_xy_radec.db  Solution: dbccd3080.fits
+# Coordinate mapping status
+#     Ra/Dec or Long/Lat fit rms: 0.165  0.149   (arcsec  arcsec)
+# Coordinate mapping parameters
+#     Sky projection geometry: tan
+#     Reference point: 74:27:38.69  -69:56:59.85  (degrees  degrees)
+#     Reference point: 916.109  955.047  (pixels  pixels)
+#     X and Y scale: 0.260  0.260  (arcsec/pixel  arcsec/pixel)
+#     X and Y axis rotation: 89.788  269.823  (degrees  degrees)
+# Wcs mapping status
+#     Ra/Dec or Long/Lat wcs rms: 0.165  0.149   (arcsec  arcsec)
+
+# Input Coordinate Listing
+#     Column 1: X (pixels)
+#     Column 2: Y (pixels)
+#     Column 3: Ra / Longitude (degrees)
+#     Column 4: Dec / Latitude (degrees)
+#     Column 5: Fitted Ra / Longitude (degrees)
+#     Column 6: Fitted Dec / Latitude (degrees)
+#     Column 7: Residual Ra / Longitude (arcseconds)
+#     Column 8: Residual Dec / Latitude (arcseconds)
+
+   293.780   1304.910   74:23:11.87 -69:54:18.14   74:23:12.02 -69:54:18.15  -0.148  0.007
+   191.070   1625.180   74:19:09.37 -69:53:51.61   74:19:09.38 -69:53:51.54  -0.012 -0.075
+   657.200   1960.920   74:14:55.25 -69:55:52.82   74:14:55.31 -69:55:52.84  -0.063  0.017
+  1052.550   1301.220   74:23:16.19 -69:57:35.53   74:23:16.25 -69:57:35.58  -0.058  0.049
+  1334.220   1530.300   74:20:22.88 -69:58:48.97   74:20:22.68 -69:58:48.96   0.199 -0.010
+  1796.150   1461.320   74:21:15.91 -70:00:49.03   74:21:15.79 -70:00:49.13   0.119  0.102
+    78.750    194.510   74:37:12.00 -69:53:21.08   74:37:11.83 -69:53:21.11   0.170  0.021
+   424.540    328.440   74:35:32.53 -69:54:51.30   74:35:32.02 -69:54:51.27   0.512 -0.031
+   913.680    555.200   74:32:42.22 -69:56:58.70   74:32:42.11 -69:56:58.83   0.103  0.125
+  1658.490    421.590   74:34:27.19 -70:00:12.31   74:34:26.64 -70:00:12.46   0.550  0.150
+  1583.800    650.560   74:31:32.70 -69:59:53.52   74:31:32.17 -69:59:53.30   0.533 -0.220
+  1030.690    945.960   74:27:44.86 -69:57:30.06   74:27:45.91 -69:57:29.66  -1.054 -0.399
+   738.830   1102.400   74:25:46.42 -69:56:13.63   74:25:46.44 -69:56:13.84  -0.023  0.204
+   621.110    866.070   74:28:45.55 -69:55:42.96   74:28:45.32 -69:55:43.02   0.235  0.061
+  1366.640     77.620   74:38:45.78 -69:58:56.03   74:38:46.84 -69:58:56.03  -1.062 -0.000
+
