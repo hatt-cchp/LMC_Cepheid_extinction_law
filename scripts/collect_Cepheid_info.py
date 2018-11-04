@@ -30,7 +30,9 @@ for curr_dir in  dirs:
 			hdulist = pyfits.open(curr_file)
 			object_name=hdulist[0].header['OBJECT']
 
-			if object_name[0:2] == "HV":
+			if  "HV2836" in object_name: continue # This is not supposed to be included
+
+			if object_name[0:2].upper() == "HV":
 				
 				# normalize name by removing underscore 
 				if "_" in object_name:
@@ -39,7 +41,14 @@ for curr_dir in  dirs:
 				# Remove alias with /
 				if "/" in object_name:
 					object_name=object_name.split('/')[0]
-				
+
+					# HV879 and HV2257 are in the same
+					# field-of-view
+					if object_name == "HV879":
+						object_name = "HV878"
+
+						
+
 				# Remove preceeding zeros from object_name
 				object_name=object_name[0:2]+str(int(object_name[2:]))
 
