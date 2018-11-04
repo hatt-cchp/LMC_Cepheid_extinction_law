@@ -13,11 +13,13 @@ cepheid_names = cepheid_df.set_index('name').index.unique().values
 
 start_match_rad=20
 
-f_daomatch = open("daomatch_als_script","w")
-f_daomaster = open("daomaster_als_script","w")
+f_daomatch =  open("../matching/daomatch_als_script","w")
+f_daomaster = open("../matching/daomaster_als_script","w")
 
 f_daomatch.write("#!/bin/sh\n\n")
 f_daomaster.write("#!/bin/sh\n\n")
+
+print('Matching file for ',len(cepheid_names),' Cepheids')
 
 for cepheid in cepheid_names:
 
@@ -29,9 +31,8 @@ for cepheid in cepheid_names:
 	# Remove .fits extension, add .als
 	for i in range(len(als_names)):
 
-		als_names[i] = als_names[i].split('.fits')[0]+'.als'
+		als_names[i] = als_names[i].split('.fits')[0]
 
-		
 	
 	
 	for als_name in als_names[1:]:

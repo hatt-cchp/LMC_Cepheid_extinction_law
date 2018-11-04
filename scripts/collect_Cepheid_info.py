@@ -32,7 +32,8 @@ for curr_dir in  dirs:
 
 			if  "HV2836" in object_name: continue # This is not supposed to be included
 
-			if object_name[0:2].upper() == "HV":
+			if object_name[0:2].upper() == "HV": # upper since a few cases of Hv
+
 				
 				# normalize name by removing underscore 
 				if "_" in object_name:
@@ -50,7 +51,8 @@ for curr_dir in  dirs:
 						
 
 				# Remove preceeding zeros from object_name
-				object_name=object_name[0:2]+str(int(object_name[2:]))
+				# Correct cases of "Hv"
+				object_name=object_name[0:2].upper()+str(int(object_name[2:]))
 
 				filter_name=hdulist[0].header['FILTER']
 				date_obs=hdulist[0].header['DATE-OBS']
