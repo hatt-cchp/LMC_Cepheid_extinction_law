@@ -61,7 +61,7 @@ do
 
 
 	# Ignore all but a specific image
-	#if [ $fileroot != "dbccd2112" ];then continue; fi
+	if [ $fileroot != "sccd6069" ];then continue; fi
 
 
 

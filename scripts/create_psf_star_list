@@ -15,6 +15,17 @@ PICK
 $fileroot.srt
 200,16
 $fileroot.lst
+EXIT
+_DAOPHOT_
+
+# Remove stars brighter than 12 instrumental mags; these
+# tend to cause problems
+
+python ../scripts/remove_ultra_bright_psf_stars.py $fileroot.lst
+
+# Fit initial PSF
+
+daophot << _DAOPHOT_
 AT $fileroot
 PSF
 $fileroot.ap
