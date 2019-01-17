@@ -42,12 +42,26 @@ OFFSET
 $subfileroot.coo
 $offset_value,0,0,0
 $subfileroot.off
+EXIT
+_DAOPHOT_
+
+# If using WFCCD camera, just edges of footprint which is all noise
+if [ ${subfileroot:0:5} == "fbccd" ];
+then
+        python ../scripts/remove_WFCCD_edge_noise.py $subfileroot.off
+fi                                                                   
+
+daophot << _DAOPHOT_
+AT $subfileroot
 PHO
 photo
 Y
 $subfileroot.off
 $subfileroot.ap
+EXIT
 _DAOPHOT_
+
+
 
 rm -f $subfileroot.off # no longer needed
 

@@ -51,6 +51,12 @@ do
 	then
 		daophot_threshold=2.5
 	fi
+	# Setting the detection threshold
+        if [ ${fileroot:0:5} == "fbccd" ];
+        then
+        	daophot_threshold=3.5		
+        fi
+
 
 	# Skip existing or already run images
 	if [ -s $fileroot".als" ]; 
@@ -61,7 +67,7 @@ do
 
 
 	# Ignore all but a specific image
-	if [ $fileroot != "sccd6070" ];then continue; fi
+	#if [ $fileroot != "fbccd1076" ];then continue; fi
 
 
 
@@ -83,8 +89,7 @@ do
 	# Check which stars are successfully measured
 	# in all apertures (down to a mag limit) 
 	# to within a few FWHM 
-
-	../scripts/daophot_sort_ap_file $fileroot
+	#../scripts/daophot_sort_ap_file $fileroot
 	
 	# Generate PSF based on the bright and isolated stars 
 
@@ -97,7 +102,6 @@ do
 	# Remove intermediate files for the current image
 
 	../scripts/clean_up_directory $fileroot
-
 
 	
 done # End looping through images in ./phot/

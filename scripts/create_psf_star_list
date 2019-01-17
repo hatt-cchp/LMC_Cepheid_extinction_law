@@ -12,7 +12,7 @@ rm -f $fileroot.nei
 
 daophot << _DAOPHOT_
 PICK
-$fileroot.srt
+$fileroot.ap
 200,16
 $fileroot.lst
 EXIT

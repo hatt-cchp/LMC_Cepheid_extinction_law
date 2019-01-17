@@ -37,7 +37,7 @@ new_GA=`echo $curr_GA | sed 's/=.*//'`"=     ""$GA"
 sed "s/$curr_GA/$new_GA/" < daophot_temp1.opt > daophot_temp2.opt
 
 
-est_FWHM=$(python ../scripts/measure_FWHM.py $fileroot 100)
+est_FWHM=$(python ../scripts/measure_FWHM.py $fileroot 200)
 echo $est_FWHM
 
 # Change FWHM value

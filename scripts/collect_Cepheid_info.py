@@ -6,15 +6,11 @@ import astropy.io.fits as pyfits
 import pandas as pd
 import datetime
 
-dirs=["Dec2009Im6firstNightsBeforeSp/","Nov2008Imaging6nights/*/"]
+dirs=["Dec2009Im6firstNightsBeforeSp/","Nov2008Imaging6nights/*/","Dec2009Im4nights4spectra/HV*/"]
 
-allowed_prefixes=["dbccd","sccd"]
 
-#ceph_names=[]
-#filters=[]
-#filenames=[]
-#start_obs=[]
-#end_obs=[]
+allowed_prefixes=["dbccd","sccd","fbccd"]
+
 
 copy_file=open("copy_cepheid_obs","w")
 
@@ -30,6 +26,22 @@ for curr_dir in  dirs:
 			hdulist = pyfits.open(curr_file)
 			object_name=hdulist[0].header['OBJECT']
 
+
+			# Ignore sky imagse
+			if "sky" in object_name: continue
+
+			# Sometimes the filter is append to the object name
+			if " " in object_name: 
+				object_name_parts = object_name.split(" ")
+				if object_name_parts[0].upper() == "HV":
+					object_name = object_name_parts[0] + object_name_parts[1]
+				else:
+					object_name = object_name_parts[0]
+				
+			
+			print(curr_file,object_name)
+
+			if "HV 2729" in object_name: continue # This throws an error and doesn't appear to be a Cepheid
 			if  "HV2836" in object_name: continue # This is not supposed to be included
 
 			if object_name[0:2].upper() == "HV": # upper since a few cases of Hv
@@ -57,14 +69,21 @@ for curr_dir in  dirs:
 				filter_name=hdulist[0].header['FILTER']
 				date_obs=hdulist[0].header['DATE-OBS']
 				exptime=hdulist[0].header['EXPTIME']
+		
+				# Sometimes _filter is append to the filter name
+				if "_FILTER" in filter_name.upper():
+					filter_name = filter_name.split("_")[0]
+
 
 				if prefix == "sccd": 
 					ut_start = hdulist[0].header["UTSTART"]
 					ut_end   = hdulist[0].header["UTEND"]
-				elif prefix == "dbccd":
+				elif prefix == "dbccd" or prefix == "fbccd":
 					# For dbccd, make seconds decimal
 					ut_start = hdulist[0].header["UT-TIME"]+'.0'
 					ut_end   = hdulist[0].header["UT-END"] +'.0'
+
+
 
 				# Convert date and times to seconds since reference point
 				#print(curr_file,date_obs,ut_start)	

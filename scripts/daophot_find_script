@@ -19,3 +19,10 @@ OVERWRITE
 Y
 EXIT
 _DAOPHOT_
+
+
+# If using WFCCD camera, just edges of footprint which is all noise
+if [ ${fileroot:0:5} == "fbccd" ];
+then
+	python ../scripts/remove_WFCCD_edge_noise.py $fileroot.coo
+fi
