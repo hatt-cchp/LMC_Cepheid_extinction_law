@@ -41,8 +41,8 @@ for curr_dir in  dirs:
 			
 			print(curr_file,object_name)
 
-			if "HV 2729" in object_name: continue # This throws an error and doesn't appear to be a Cepheid
-			if  "HV2836" in object_name: continue # This is not supposed to be included
+			
+			
 
 			if object_name[0:2].upper() == "HV": # upper since a few cases of Hv
 
@@ -57,7 +57,7 @@ for curr_dir in  dirs:
 
 					# HV879 and HV2257 are in the same
 					# field-of-view
-					if object_name == "HV879":
+					if object_name == "HV879" or object_name == "HV2257":
 						object_name = "HV878"
 
 						
@@ -65,6 +65,21 @@ for curr_dir in  dirs:
 				# Remove preceeding zeros from object_name
 				# Correct cases of "Hv"
 				object_name=object_name[0:2].upper()+str(int(object_name[2:]))
+
+				if object_name == "HV879" or object_name == "HV2257":
+					object_name = "HV878"
+
+				if object_name == "HV2729":
+					object_name = "HV2749"
+
+
+
+				if  "HV2836" in object_name: continue # This is not supposed to be included
+
+
+
+
+
 
 				filter_name=hdulist[0].header['FILTER']
 				date_obs=hdulist[0].header['DATE-OBS']
