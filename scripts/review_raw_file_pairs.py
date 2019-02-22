@@ -48,14 +48,14 @@ for raw_file in raw_files:
 	plt.ylabel('ref mag - comp mag')
 	plt.xlabel('ref mag')
 	print(raw_file)
-	plt.draw()
-	plt.waitforbuttonpress(0)
-	if_keep  = input("Record as needing update: 1; your choice: ")
-	plt.close(fig)
+	#plt.draw()
+	#plt.waitforbuttonpress(0)
+	#if_keep  = input("Record as needing update: 1; your choice: ")
+	#plt.close(fig)
 
-	if if_keep == "1":
-		with open(to_review_file,"a") as outfile:
-			outfile.write(raw_file+"\n")
-	#plt.show()
+	#if if_keep == "1":
+	#	with open(to_review_file,"a") as outfile:
+	#		outfile.write(raw_file+"\n")
+	plt.show()
 	
 

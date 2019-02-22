@@ -13,7 +13,7 @@ rm -f $fileroot.nei
 daophot << _DAOPHOT_
 PICK
 $fileroot.ap
-200,16
+200,15
 $fileroot.lst
 EXIT
 _DAOPHOT_
